@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -13,28 +12,61 @@ class UserForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->components([
+            ->columns(2)
+            ->schema([
                 TextInput::make('name')
-                    ->required(),
+                    ->label('Nombre')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpan(1),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Correo Electrónico')
                     ->email()
-                    ->required(),
-                Select::make('role')
-                    ->options(['admin' => 'Admin', 'cocinero' => 'Cocinero', 'cliente' => 'Cliente'])
-                    ->default('cliente')
-                    ->required(),
-                TextInput::make('phone')
-                    ->tel()
-                    ->default(null),
-                Toggle::make('is_verified')
-                    ->required(),
-                Toggle::make('is_active')
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(255)
+                    ->columnSpan(1),
+
                 TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
-                    ->required(),
+                    ->required(fn ($operation) => $operation === 'create')
+                    ->minLength(8)
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->helperText('Dejar vacío para mantener la contraseña actual')
+                    ->columnSpan(1),
+
+                Select::make('role')
+                    ->label('Rol')
+                    ->options([
+                        'superadmin' => 'Super Administrador',
+                        'admin' => 'Administrador',
+                        'cocinero' => 'Cocinero',
+                        'cliente' => 'Cliente',
+                    ])
+                    ->required()
+                    ->default('cliente')
+                    ->columnSpan(1),
+
+                TextInput::make('phone')
+                    ->label('Teléfono')
+                    ->tel()
+                    ->maxLength(20)
+                    ->columnSpan(1),
+
+                Toggle::make('is_verified')
+                    ->label('¿Verificado?')
+                    ->default(true)
+                    ->helperText('Usuario ha verificado su cuenta')
+                    ->columnSpan(1),
+
+                Toggle::make('is_active')
+                    ->label('¿Activo?')
+                    ->default(true)
+                    ->helperText('Usuario puede acceder al sistema')
+                    ->columnSpan(1),
             ]);
     }
 }

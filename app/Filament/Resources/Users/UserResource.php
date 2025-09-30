@@ -12,13 +12,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 
-use Filament\Support\Enums\IconPosition;
+use BackedEnum;
+use Filament\Support\Icons\Heroicon;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::UserGroup;
 
     protected static ?string $navigationLabel = 'Usuarios';
 

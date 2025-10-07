@@ -20,12 +20,18 @@ class UsersTable
                 TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap()
+                    ->limit(30),
 
                 TextColumn::make('email')
-                    ->label('Correo Electrónico')
+                    ->label('Email')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->copyable()
+                    ->copyMessage('Email copiado')
+                    ->wrap()
+                    ->limit(35),
 
                 TextColumn::make('role')
                     ->label('Rol')
@@ -39,7 +45,7 @@ class UsersTable
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'superadmin' => 'Super Admin',
-                        'admin' => 'Administrador',
+                        'admin' => 'Admin',
                         'cocinero' => 'Cocinero',
                         'cliente' => 'Cliente',
                         default => $state,
@@ -48,47 +54,51 @@ class UsersTable
                 TextColumn::make('phone')
                     ->label('Teléfono')
                     ->searchable()
-                    ->placeholder('Sin teléfono'),
+                    ->placeholder('—')
+                    ->toggleable(),
 
                 IconColumn::make('is_verified')
                     ->label('Verificado')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-badge')
-                    ->falseIcon('heroicon-o-x-circle'),
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->alignCenter()
+                    ->toggleable(),
 
                 IconColumn::make('is_active')
                     ->label('Activo')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-no-symbol'),
+                    ->falseIcon('heroicon-o-no-symbol')
+                    ->alignCenter(),
 
                 TextColumn::make('created_at')
                     ->label('Creado')
-                    ->dateTime('d/m/Y H:i')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('role')
-                    ->label('Filtrar por Rol')
+                    ->label('Rol')
                     ->options([
-                        'superadmin' => 'Super Administrador',
-                        'admin' => 'Administrador',
+                        'superadmin' => 'Super Admin',
+                        'admin' => 'Admin',
                         'cocinero' => 'Cocinero',
                         'cliente' => 'Cliente',
                     ]),
 
                 TernaryFilter::make('is_verified')
-                    ->label('Estado de Verificación')
+                    ->label('Verificación')
                     ->placeholder('Todos')
-                    ->trueLabel('Solo verificados')
-                    ->falseLabel('Solo no verificados'),
+                    ->trueLabel('Verificados')
+                    ->falseLabel('No verificados'),
 
                 TernaryFilter::make('is_active')
-                    ->label('Estado de Actividad')
+                    ->label('Estado')
                     ->placeholder('Todos')
-                    ->trueLabel('Solo activos')
-                    ->falseLabel('Solo inactivos'),
+                    ->trueLabel('Activos')
+                    ->falseLabel('Inactivos'),
             ])
             ->recordActions([
                 EditAction::make()
@@ -97,9 +107,10 @@ class UsersTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->label('Eliminar seleccionados'),
+                        ->label('Eliminar'),
                 ]),
             ])
+            ->defaultSort('created_at', 'desc')
             ->emptyStateHeading('No hay usuarios')
             ->emptyStateDescription('Comienza creando tu primer usuario.');
     }

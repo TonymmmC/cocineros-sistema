@@ -59,4 +59,12 @@ class User extends Authenticatable
     {
         return in_array($this->role, ['superadmin', 'admin']);
     }
+
+    /**
+     * Relación: Un usuario puede ser cocinero
+     */
+    public function cocinero()
+    {
+        return $this->hasOne(Cocinero::class);
+    }
 }

@@ -16,11 +16,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/categorias', [CategoriaController::class, 'index']);
     Route::get('/categorias/{id}', [CategoriaController::class, 'show']);
 
-    // Productos (público)
+    // Productos (público) - ORDEN IMPORTANTE
     Route::get('/productos', [ProductoController::class, 'index']);
-    Route::get('/productos/{id}', [ProductoController::class, 'show']);
-    Route::get('/productos/categoria/{categoriaId}', [ProductoController::class, 'byCategoria']);
     Route::get('/productos/search', [ProductoController::class, 'search']);
+    Route::get('/productos/categoria/{categoriaId}', [ProductoController::class, 'byCategoria']);
+    Route::get('/productos/{id}', [ProductoController::class, 'show']);
 
     // Cocineros (público)
     Route::get('/cocineros', [CocineroController::class, 'index']);

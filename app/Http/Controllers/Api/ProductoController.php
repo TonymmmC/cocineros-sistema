@@ -20,17 +20,14 @@ class ProductoController extends Controller
         $query = Producto::with(['categoria', 'cocinero'])
             ->where('disponible', true);
 
-        // Filtro por categoría
         if ($request->filled('categoria_id')) {
             $query->where('categoria_id', $request->categoria_id);
         }
 
-        // Filtro por cocinero
         if ($request->filled('cocinero_id')) {
             $query->where('cocinero_id', $request->cocinero_id);
         }
 
-        // Filtros dietéticos
         if ($request->boolean('vegetariano')) {
             $query->where('es_vegetariano', true);
         }
@@ -41,7 +38,6 @@ class ProductoController extends Controller
             $query->where('es_sin_gluten', true);
         }
 
-        // Ordenamiento
         $sortBy = $request->get('sort_by', 'created_at');
         $sortOrder = $request->get('sort_order', 'desc');
 
@@ -85,18 +81,33 @@ class ProductoController extends Controller
     }
 
     /**
-     * Búsqueda de productos
+     * Búsqueda de productos con full-text search PostgreSQL
+     *
+     * Ventajas sobre LIKE:
+     * - Búsqueda semántica (encuentra "salteña" buscando "empanada")
+     * - Ranking de relevancia
+     * - Soporte para stemming en español
+     * - Mucho más rápido en grandes datasets
      */
     public function search(Request $request): AnonymousResourceCollection
     {
         $searchTerm = $request->get('q', '');
 
+        if (empty($searchTerm)) {
+            return $this->index($request);
+        }
+
         $productos = Producto::with(['categoria', 'cocinero'])
             ->where('disponible', true)
-            ->where(function ($query) use ($searchTerm) {
-                $query->where('nombre', 'like', "%{$searchTerm}%")
-                      ->orWhere('descripcion', 'like', "%{$searchTerm}%");
-            })
+            ->whereRaw(
+                "to_tsvector('spanish', nombre || ' ' || descripcion) @@ plainto_tsquery('spanish', ?)",
+                [$searchTerm]
+            )
+            ->selectRaw(
+                "productos.*, ts_rank(to_tsvector('spanish', nombre || ' ' || descripcion), plainto_tsquery('spanish', ?)) as rank",
+                [$searchTerm]
+            )
+            ->orderBy('rank', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
@@ -218,7 +229,7 @@ class ProductoController extends Controller
 }
 
 // REFACTOR SUGGESTIONS:
-// 1. Extraer validaciones a FormRequest classes
-// 2. Usar Policy en lugar de chequeos manuales de ownership
-// 3. Implementar full-text search en producción (MySQL/PostgreSQL)
-// 4. Agregar upload de imágenes (actualmente solo JSON)
+// 1. Usar Policy en lugar de chequeos manuales de ownership
+// 2. Extraer validaciones a FormRequest classes
+// 3. Agregar búsqueda con typo tolerance usando pg_trgm extension
+// 4. Implementar cache para búsquedas frecuentes

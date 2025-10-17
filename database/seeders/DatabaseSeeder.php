@@ -7,12 +7,9 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Crear usuario de prueba
+        // Crear usuario admin
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@cocineros.com',
@@ -22,8 +19,9 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        // Ejecutar seeders en orden
+        // Ejecutar seeders en orden de dependencias
         $this->call([
+            ConfiguracionSistemaSeeder::class,
             CategoriaSeeder::class,
             ProductoSeeder::class,
         ]);

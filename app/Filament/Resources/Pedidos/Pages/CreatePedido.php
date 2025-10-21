@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Filament\Resources\Pedidos\Pages;
+
+use App\Filament\Resources\Pedidos\PedidoResource;
+use Filament\Resources\Pages\CreateRecord;
+
+class CreatePedido extends CreateRecord
+{
+    protected static string $resource = PedidoResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Pedido creado exitosamente';
+    }
+}

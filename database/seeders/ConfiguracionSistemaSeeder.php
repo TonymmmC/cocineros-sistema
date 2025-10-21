@@ -11,46 +11,46 @@ class ConfiguracionSistemaSeeder extends Seeder
     {
         $configuraciones = [
             [
-                'clave' => 'comision_plataforma_porcentaje',
-                'valor' => '15',
-                'tipo' => 'numero',
-                'descripcion' => 'Porcentaje de comisión que cobra la plataforma por pedido',
+                'clave' => 'nombre_plataforma',
+                'tipo' => 'texto',
+                'valor' => 'Cocineros Bolivia',
+                'descripcion' => 'Nombre de la plataforma',
             ],
             [
-                'clave' => 'radio_busqueda_km',
+                'clave' => 'comision_porcentaje',
+                'tipo' => 'numero',
                 'valor' => '10',
-                'tipo' => 'numero',
-                'descripcion' => 'Radio predeterminado de búsqueda de cocineros en kilómetros',
-            ],
-            [
-                'clave' => 'tiempo_cancelacion_min',
-                'valor' => '5',
-                'tipo' => 'numero',
-                'descripcion' => 'Tiempo máximo en minutos para cancelar un pedido sin penalización',
-            ],
-            [
-                'clave' => 'min_calificacion_visible',
-                'valor' => '1',
-                'tipo' => 'numero',
-                'descripcion' => 'Calificación mínima para que sea visible públicamente',
+                'descripcion' => 'Porcentaje de comisión por pedido',
             ],
             [
                 'clave' => 'costo_entrega_base',
-                'valor' => '5',
                 'tipo' => 'numero',
+                'valor' => '5.00',
                 'descripcion' => 'Costo base de entrega en bolivianos',
             ],
             [
-                'clave' => 'max_productos_por_pedido',
-                'valor' => '20',
+                'clave' => 'tiempo_maximo_preparacion',
                 'tipo' => 'numero',
-                'descripcion' => 'Número máximo de productos diferentes por pedido',
+                'valor' => '60',
+                'descripcion' => 'Tiempo máximo de preparación en minutos',
             ],
             [
-                'clave' => 'plataforma_activa',
-                'valor' => '1',
+                'clave' => 'habilitar_calificaciones',
                 'tipo' => 'booleano',
-                'descripcion' => 'Indica si la plataforma está operativa',
+                'valor' => 'true',
+                'descripcion' => 'Habilitar sistema de calificaciones',
+            ],
+            [
+                'clave' => 'radio_entrega_default',
+                'tipo' => 'numero',
+                'valor' => '5.00',
+                'descripcion' => 'Radio de entrega por defecto en km',
+            ],
+            [
+                'clave' => 'configuracion_notificaciones',
+                'tipo' => 'json',
+                'valor' => '{"email": true, "sms": false, "push": true}',
+                'descripcion' => 'Configuración de notificaciones',
             ],
         ];
 

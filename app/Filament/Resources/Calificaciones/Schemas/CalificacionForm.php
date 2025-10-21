@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Calificaciones\Schemas;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -54,6 +55,11 @@ class CalificacionForm
                             ->rows(3)
                             ->maxLength(500)
                             ->columnSpan(1),
+
+                        Toggle::make('es_visible')
+                            ->label('¿Visible?')
+                            ->default(true)
+                            ->columnSpan(2),
                     ])
                     ->columns(2),
             ]);

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Conversaciones\Schemas;
 
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -15,6 +14,14 @@ class ConversacionForm
             ->schema([
                 Section::make('Información de la Conversación')
                     ->schema([
+                        Select::make('pedido_id')
+                            ->label('Pedido')
+                            ->relationship('pedido', 'codigo_pedido')
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->columnSpan(2),
+
                         Select::make('cliente_id')
                             ->label('Cliente')
                             ->relationship('cliente', 'nombre_completo')
@@ -30,11 +37,6 @@ class ConversacionForm
                             ->searchable()
                             ->preload()
                             ->columnSpan(1),
-
-                        Toggle::make('activa')
-                            ->label('¿Activa?')
-                            ->default(true)
-                            ->columnSpan(2),
                     ])
                     ->columns(2),
             ]);

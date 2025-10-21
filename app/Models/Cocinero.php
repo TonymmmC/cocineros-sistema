@@ -56,6 +56,22 @@ class Cocinero extends Model
     }
 
     /**
+     * Relación: Un cocinero tiene muchos pedidos
+     */
+    public function pedidos(): HasMany
+    {
+        return $this->hasMany(Pedido::class);
+    }
+
+    /**
+     * Relación: Un cocinero tiene muchas calificaciones
+     */
+    public function calificaciones(): HasMany
+    {
+        return $this->hasMany(Calificacion::class);
+    }
+
+    /**
      * Scope: solo cocineros disponibles
      */
     public function scopeDisponible($query)

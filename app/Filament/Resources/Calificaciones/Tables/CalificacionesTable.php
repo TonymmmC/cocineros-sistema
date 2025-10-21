@@ -36,11 +36,18 @@ class CalificacionesTable
                     ->sortable()
                     ->searchable(),
 
-                IconColumn::make('puntuacion')
+                TextColumn::make('puntuacion')
                     ->label('Puntuación')
-                    ->formatStateUsing(function ($state) {
-                        return str_repeat('⭐', $state);
+                    ->badge()
+                    ->color(fn ($state) => match((int) $state) {
+                        1, 2 => 'danger',
+                        3 => 'warning',
+                        4 => 'success',
+                        5 => 'success',
+                        default => 'gray',
                     })
+                    ->formatStateUsing(fn ($state) => $state . '/5')
+                    ->icon('heroicon-m-star')
                     ->sortable(),
 
                 TextColumn::make('comentario')
@@ -51,6 +58,14 @@ class CalificacionesTable
                         return strlen($state) > 50 ? $state : null;
                     }),
 
+                IconColumn::make('es_visible')
+                    ->label('Visible')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
+
                 TextColumn::make('created_at')
                     ->label('Fecha')
                     ->dateTime('d/m/Y H:i')
@@ -60,11 +75,18 @@ class CalificacionesTable
                 SelectFilter::make('puntuacion')
                     ->label('Puntuación')
                     ->options([
-                        1 => '1 ⭐',
-                        2 => '2 ⭐⭐',
-                        3 => '3 ⭐⭐⭐',
-                        4 => '4 ⭐⭐⭐⭐',
-                        5 => '5 ⭐⭐⭐⭐⭐',
+                        1 => '1 estrella',
+                        2 => '2 estrellas',
+                        3 => '3 estrellas',
+                        4 => '4 estrellas',
+                        5 => '5 estrellas',
+                    ]),
+
+                SelectFilter::make('es_visible')
+                    ->label('Visibilidad')
+                    ->options([
+                        true => 'Visible',
+                        false => 'Oculta',
                     ]),
             ])
             ->actions([

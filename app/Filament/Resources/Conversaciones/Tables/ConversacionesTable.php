@@ -4,9 +4,7 @@ namespace App\Filament\Resources\Conversaciones\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ConversacionesTable
@@ -31,13 +29,10 @@ class ConversacionesTable
                     ->searchable()
                     ->limit(20),
 
-                IconColumn::make('activa')
-                    ->label('Activa')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger'),
+                TextColumn::make('pedido.codigo_pedido')
+                    ->label('Pedido')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('mensajes_count')
                     ->label('Mensajes')
@@ -49,18 +44,13 @@ class ConversacionesTable
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
 
-                TextColumn::make('updated_at')
+                TextColumn::make('ultima_actividad')
                     ->label('Última Actividad')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('activa')
-                    ->label('Estado')
-                    ->options([
-                        true => 'Activa',
-                        false => 'Inactiva',
-                    ]),
+                // Los filtros se pueden agregar aquí
             ])
             ->actions([
                 // Actions can be added here
@@ -70,6 +60,6 @@ class ConversacionesTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('updated_at', 'desc');
+            ->defaultSort('ultima_actividad', 'desc');
     }
 }

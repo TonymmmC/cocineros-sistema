@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Productos\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -29,6 +30,24 @@ class ProductoForm
                             ->label('Descripción')
                             ->required()
                             ->rows(3)
+                            ->columnSpan(2),
+
+                        FileUpload::make('imagenes')
+                            ->label('Imágenes del Producto')
+                            ->image()
+                            ->multiple()
+                            ->maxFiles(5)
+                            ->directory('productos')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->maxSize(2048)
+                            ->helperText('Puedes subir hasta 5 imágenes (máx. 2MB cada una)')
                             ->columnSpan(2),
 
                         Select::make('categoria_id')

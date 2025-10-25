@@ -18,42 +18,45 @@ class UserForm
                     ->label('Nombre')
                     ->required()
                     ->maxLength(255)
+                    ->regex('/^[a-zA-Z-áéíóúÁÉÍÓÚñÑ\s]+$/')
+                    ->validationMessages([
+                        'regex' => 'El nombre solo puede contener letras',
+                    ])
                     ->columnSpan(1),
 
                 TextInput::make('email')
                     ->label('Correo Electrónico')
-                    ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255)
-                    ->columnSpan(1),
-
-                TextInput::make('password')
-                    ->label('Contraseña')
-                    ->password()
-                    ->required(fn ($operation) => $operation === 'create')
-                    ->minLength(8)
-                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
-                    ->dehydrated(fn ($state) => filled($state))
-                    ->helperText('Dejar vacío para mantener la contraseña actual')
+                    ->suffix('@gmail.com')
+                    ->dehydrateStateUsing(fn ($state) => $state . '@gmail.com')
+                    ->formatStateUsing(fn ($state) => str_replace('@gmail.com', '',$state))
                     ->columnSpan(1),
 
                 Select::make('role')
                     ->label('Rol')
                     ->options([
-                        'superadmin' => 'Super Administrador',
                         'admin' => 'Administrador',
                         'cocinero' => 'Cocinero',
                         'cliente' => 'Cliente',
                     ])
                     ->required()
                     ->default('cliente')
+                    ->native(false)
                     ->columnSpan(1),
 
                 TextInput::make('phone')
                     ->label('Teléfono')
                     ->tel()
-                    ->maxLength(20)
+                    ->maxLength(8)
+                    ->minLength(8)
+                    ->numeric()
+                    ->validationMessages([
+                        'numeric' => 'El teléfono solo puede contener números.',
+                        'min' => 'El teléfono debe tener exactamente 8 dígitos.',
+                        'max' => 'El teléfono deber tener exactamente 8 dígitos',
+                    ])
                     ->columnSpan(1),
 
                 Toggle::make('is_verified')

@@ -14,7 +14,12 @@ class ListUsers extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Nuevo Usuario'),
+                ->label('Nuevo Usuario')
+                ->modal()
+                ->modalHeading('Crear Usuario')
+                ->modalSubmitActionLabel('Crear')
+                ->modalCancelActionLabel('Cancelar')
+                ->successNotificationTitle('Usuario creado'),
         ];
     }
 }

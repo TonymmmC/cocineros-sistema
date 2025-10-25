@@ -51,8 +51,6 @@ class CocineroResource extends Resource
     {
         return [
             'index' => ListCocineros::route('/'),
-            'create' => CreateCocinero::route('/create'),
-            'edit' => EditCocinero::route('/{record}/edit'),
         ];
     }
 }

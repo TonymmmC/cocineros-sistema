@@ -24,8 +24,17 @@ class CocineroForm
                             ->schema([
                                 Select::make('user_id')
                                     ->label('Usuario Asociado')
-                                    ->relationship('user', 'name', function ($query) {
-                                        return $query->where('role', 'cocinero');
+                                    ->relationship('user', 'name', function ($query, $record) {
+                                        // Solo usuarios con rol 'cocinero' que No tengan perfil de cocinero
+                                        $query->where('role', 'cocinero')
+                                            ->whereDoesntHave('cocinero');
+
+                                        // Si estamos EDITANDO, permitir el usuario actual
+                                        if ($record && $record->user_id) {
+                                            $query->orWhere('id', $record->user_id);
+                                        }
+
+                                        return $query;
                                     })
                                     ->required()
                                     ->searchable()
@@ -36,14 +45,27 @@ class CocineroForm
                                 TextInput::make('nombre_completo')
                                     ->label('Nombre Completo')
                                     ->required()
-                                    ->maxLength(150)
+                                    ->maxLength(35)
+                                    ->regex('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)+$/')
+                                    ->validationMessages([
+                                        'regex' => 'Debe ingresar al menos nombre y apellido (solo letras y espacios)',
+                                    ])
+                                    ->helperText('Ejemplo: Juan Perez Lopez')
                                     ->columnSpan(1),
 
                                 TextInput::make('ci')
                                     ->label('Cédula de Identidad')
                                     ->required()
                                     ->unique(ignoreRecord: true)
-                                    ->maxLength(20)
+                                    ->numeric()
+                                    ->rules([
+                                        'digits_between:5,8',
+                                    ])
+                                    ->validationMessages([
+                                        'numeric' => 'La CI solo puede contener números.',
+                                        'digits_between' => 'La C.I. debe tener entre 5 y 8 dígitos.',
+                                        'unique' => 'Esta Cédula de Identidad ya está registrada.',
+                                    ])
                                     ->columnSpan(1),
 
                                 FileUpload::make('foto_perfil')
@@ -57,7 +79,7 @@ class CocineroForm
                                 Textarea::make('bio')
                                     ->label('Biografía')
                                     ->rows(3)
-                                    ->maxLength(500)
+                                    ->maxLength(300)
                                     ->columnSpan(2),
                             ])
                             ->columns(2),
@@ -67,6 +89,9 @@ class CocineroForm
                                 Textarea::make('direccion')
                                     ->label('Dirección Completa')
                                     ->required()
+                                    ->validationMessages([
+                                        'required' => 'La Dirección es necesaria.'
+                                        ])
                                     ->rows(2)
                                     ->columnSpan(2),
 

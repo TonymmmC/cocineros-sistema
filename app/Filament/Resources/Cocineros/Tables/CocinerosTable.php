@@ -20,8 +20,7 @@ class CocinerosTable
                 ImageColumn::make('foto_perfil')
                     ->label('Foto')
                     ->circular()
-                    ->defaultImageUrl(url('/images/default-avatar.png'))
-                    ->toggleable(),
+                    ->defaultImageUrl(url('/images/default-avatar.png')),
 
                 TextColumn::make('nombre_completo')
                     ->label('Nombre')
@@ -51,7 +50,7 @@ class CocinerosTable
                     ->label('Radio Entrega')
                     ->suffix(' km')
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('calificacion_promedio')
                     ->label('Calificación')
@@ -71,7 +70,7 @@ class CocinerosTable
                     ->numeric()
                     ->sortable()
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('productos_count')
                     ->label('Productos')
@@ -79,7 +78,7 @@ class CocinerosTable
                     ->badge()
                     ->color('info')
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('esta_disponible')
                     ->label('Disponible')
@@ -102,11 +101,18 @@ class CocinerosTable
                     ->label('Disponibilidad')
                     ->placeholder('Todos')
                     ->trueLabel('Disponibles')
-                    ->falseLabel('No disponibles'),
+                    ->falseLabel('No disponibles')
+                    ->native(false),
             ])
             ->recordActions([
                 EditAction::make()
-                    ->label('Editar'),
+                    ->label('Editar')
+                    ->modal()
+                    ->modalHeading('Editar Cocinero')
+                    ->modalSubmitActionLabel('Guardar')
+                    ->modalCancelActionLabel('Cancelar')
+                    ->successNotificationTitle('Cocinero actualizado')
+                    ->modalWidth('3x1'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -13,7 +13,14 @@ class ListCocineros extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Nuevo Cocinero')
+                ->modal()
+                ->modalHeading('Crear Cocinero')
+                ->modalSubmitActionLabel('Crear')
+                ->modalCancelActionLabel('Cancelar')
+                ->successNotificationTitle('Cocinero creado')
+                ->modalWidth('3x1'),
         ];
     }
 }

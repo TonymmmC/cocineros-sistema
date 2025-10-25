@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -102,12 +104,50 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make()
-                    ->label('Editar'),
+                    ->label('Editar')
+                    ->modal()
+                    ->modalHeading('Editar Usuario')
+                    ->modalSubmitActionLabel('Guardar')
+                    ->modalCancelActionLabel('Cancelar')
+                    ->successNotificationTitle('Usuario actualizado')
+                    ->visible(fn ($record) => $record->role !== 'superadmin'),
+
+                Action::make('deactivate')
+                    ->label('Eliminar')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Desactivar Usuario')
+                    ->modalDescription('¿Estás seguro que deseas desactivar este usuario? El usuario no podrá acceder al sistema.')
+                    ->modalSubmitActionLabel('Sí, desactivar')
+                    ->modalCancelActionLabel('Cancelar')
+                    ->action(fn ($record) => $record->update(['is_active' => false]))
+                    ->successNotificationTitle('Usuario desactivado')
+                    ->visible(fn ($record) => $record->is_active && $record->role !== 'superadmin'),
+
+                Action::make('activate')
+                    ->label('Activar')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalHeading('Activar Usuario')
+                    ->modalDescription('¿Estás seguro que deseas activar este usuario?')
+                    ->modalSubmitActionLabel('Sí, activar')
+                    ->modalCancelActionLabel('Cancelar')
+                    ->action(fn ($record) => $record->update(['is_active' => true]))
+                    ->successNotificationTitle('Usuario activado')
+                    ->visible(fn ($record) => !$record->is_active),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->label('Eliminar'),
+                        ->label('Desactivar seleccionados')
+                        ->action(fn ($records) => $records->each->update(['is_active' => false]))
+                        ->successNotificationTitle('Usuarios desactivados')
+                        ->modalHeading('Desactivar Usuarios')
+                        ->modalDescription('¿Estás seguro que deseas desactivar los usuarios seleccionados?')
+                        ->modalSubmitActionLabel('Sí, desactivar')
+                        ->modalCancelActionLabel('Cancelar'),
                 ]),
             ])
             ->defaultSort('created_at', 'desc')

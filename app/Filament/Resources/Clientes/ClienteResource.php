@@ -49,8 +49,6 @@ class ClienteResource extends Resource
     {
         return [
             'index' => ListClientes::route('/'),
-            'create' => CreateCliente::route('/create'),
-            'edit' => EditCliente::route('/{record}/edit'),
         ];
     }
 }

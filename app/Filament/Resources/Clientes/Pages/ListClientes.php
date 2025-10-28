@@ -14,7 +14,12 @@ class ListClientes extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Nuevo Cliente'),
+                ->label('Nuevo Cliente')
+                ->modal()
+                ->modalHeading('Nuevo Cliente')
+                ->modalSubmitActionLabel('Crear')
+                ->modalCancelActionLabel('Cancelar')
+                ->successNotificationTitle('Cliente creado exitosamente'),
         ];
     }
 }

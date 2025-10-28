@@ -32,6 +32,7 @@ class UsersTable
                     ->sortable()
                     ->copyable()
                     ->copyMessage('Email copiado')
+                    ->icon('heroicon-o-envelope')
                     ->wrap()
                     ->limit(35),
 
@@ -56,6 +57,9 @@ class UsersTable
                 TextColumn::make('phone')
                     ->label('Teléfono')
                     ->searchable()
+                    ->copyable()
+                    ->copyMessage('Teléfono copiado')
+                    ->icon('heroicon-o-phone')
                     ->placeholder('—')
                     ->toggleable(isToggledHiddenByDefault: true),
 

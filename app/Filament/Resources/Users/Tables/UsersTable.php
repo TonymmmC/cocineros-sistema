@@ -32,6 +32,7 @@ class UsersTable
                     ->sortable()
                     ->copyable()
                     ->copyMessage('Email copiado')
+                    ->icon('heroicon-o-envelope')
                     ->wrap()
                     ->limit(35),
 
@@ -56,8 +57,11 @@ class UsersTable
                 TextColumn::make('phone')
                     ->label('Teléfono')
                     ->searchable()
+                    ->copyable()
+                    ->copyMessage('Teléfono copiado')
+                    ->icon('heroicon-o-phone')
                     ->placeholder('—')
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_verified')
                     ->label('Verificado')
@@ -65,7 +69,7 @@ class UsersTable
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-circle')
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')
                     ->label('Activo')
@@ -88,19 +92,22 @@ class UsersTable
                         'admin' => 'Admin',
                         'cocinero' => 'Cocinero',
                         'cliente' => 'Cliente',
-                    ]),
+                    ])
+                    ->native(false),
 
                 TernaryFilter::make('is_verified')
                     ->label('Verificación')
                     ->placeholder('Todos')
                     ->trueLabel('Verificados')
-                    ->falseLabel('No verificados'),
+                    ->falseLabel('No verificados')
+                    ->native(false),
 
                 TernaryFilter::make('is_active')
                     ->label('Estado')
                     ->placeholder('Todos')
                     ->trueLabel('Activos')
-                    ->falseLabel('Inactivos'),
+                    ->falseLabel('Inactivos')
+                    ->native(false),
             ])
             ->recordActions([
                 EditAction::make()

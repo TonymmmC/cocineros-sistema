@@ -1,0 +1,58 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+:root {
+    --font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Estilo rústico moderno para restaurante */
+.fi-sidebar {
+    @apply bg-gradient-to-b from-stone-50 to-stone-100 dark:from-stone-900 dark:to-stone-950;
+}
+
+.fi-topbar {
+    @apply bg-white/95 backdrop-blur-sm border-b border-stone-200 dark:bg-stone-900/95 dark:border-stone-700;
+}
+
+.fi-main {
+    @apply bg-stone-50 dark:bg-stone-950;
+}
+
+/* Botones con estilo cálido */
+.fi-btn-primary {
+    @apply shadow-md hover:shadow-lg transition-all duration-200;
+}
+
+/* Cards con sombra suave */
+.fi-section {
+    @apply shadow-sm border border-stone-200 dark:border-stone-700 rounded-xl;
+}
+
+/* Tablas con estilo elegante */
+.fi-ta-table {
+    @apply rounded-lg overflow-hidden;
+}
+
+.fi-ta-row {
+    @apply hover:bg-stone-50 dark:hover:bg-stone-800/50 transition-colors;
+}
+
+/* Inputs con bordes suaves */
+.fi-input {
+    @apply border-stone-300 dark:border-stone-600 focus:border-primary-500 rounded-lg;
+}
+
+/* Navegación lateral elegante */
+.fi-sidebar-nav-item {
+    @apply rounded-lg transition-all duration-200;
+}
+
+.fi-sidebar-nav-item-active {
+    @apply bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-600;
+}
+
+/* Header del usuario */
+.fi-user-menu {
+    @apply rounded-full;
+}

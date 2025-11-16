@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use Filament\Support\Facades\FilamentView;
-use Filament\View\PanelsRenderHook;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,9 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FilamentView::registerRenderHook(
-            PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
-            fn (): string => Blade::render('<x-theme-toggle />')
-        );
+        //
     }
 }

@@ -21,13 +21,9 @@
                     <div class="absolute -bottom-12 left-6">
                         <div class="w-24 h-24 bg-white rounded-full p-1 shadow-lg">
                             <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center text-4xl overflow-hidden">
-                                @if($cocinero->foto_perfil)
-                                    <img src="{{ asset('storage/' . $cocinero->foto_perfil) }}"
-                                         alt="{{ $cocinero->nombre_completo }}"
-                                         class="w-full h-full object-cover rounded-full">
-                                @else
-                                    👨‍🍳
-                                @endif
+                                <img src="{{ $cocinero->foto_url }}"
+                                     alt="{{ $cocinero->nombre_completo }}"
+                                     class="w-full h-full object-cover rounded-full">
                             </div>
                         </div>
                     </div>
@@ -109,7 +105,9 @@
             </div>
         @empty
             <div class="col-span-full text-center py-20">
-                <div class="text-6xl mb-4 opacity-30">👨‍🍳</div>
+                <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">No hay cocineros disponibles</h3>
                 <p class="text-gray-500">Pronto tendremos más cocineros disponibles para ti</p>
             </div>

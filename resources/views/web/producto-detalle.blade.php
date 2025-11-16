@@ -33,15 +33,9 @@
         <!-- Imágenes -->
         <div>
             <div class="relative bg-gray-100 rounded-2xl overflow-hidden h-[450px] shadow-sm">
-                @if($producto->primera_imagen)
-                    <img src="{{ asset('storage/' . $producto->primera_imagen) }}"
-                         alt="{{ $producto->nombre }}"
-                         class="w-full h-full object-cover">
-                @else
-                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                        <span class="text-8xl opacity-30">🍽️</span>
-                    </div>
-                @endif
+                <img src="{{ $producto->imagen_url }}"
+                     alt="{{ $producto->nombre }}"
+                     class="w-full h-full object-cover">
 
                 <!-- Badges -->
                 <div class="absolute top-4 left-4 flex flex-col gap-2">
@@ -170,13 +164,9 @@
                     <a href="{{ route('cocinero.detalle', $producto->cocinero->id) }}"
                        class="flex items-center bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-gray-100 group">
                         <div class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center text-3xl overflow-hidden ring-4 ring-white shadow-md">
-                            @if($producto->cocinero->foto_perfil)
-                                <img src="{{ asset('storage/' . $producto->cocinero->foto_perfil) }}"
-                                     alt="{{ $producto->cocinero->nombre_completo }}"
-                                     class="w-full h-full object-cover">
-                            @else
-                                👨‍🍳
-                            @endif
+                            <img src="{{ $producto->cocinero->foto_url }}"
+                                 alt="{{ $producto->cocinero->nombre_completo }}"
+                                 class="w-full h-full object-cover">
                         </div>
                         <div class="ml-4 flex-1">
                             <h4 class="font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
@@ -208,15 +198,9 @@
                 @foreach($relacionados as $rel)
                     <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            @if($rel->primera_imagen)
-                                <img src="{{ asset('storage/' . $rel->primera_imagen) }}"
-                                     alt="{{ $rel->nombre }}"
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                                    <span class="text-4xl opacity-50">🍽️</span>
-                                </div>
-                            @endif
+                            <img src="{{ $rel->imagen_url }}"
+                                 alt="{{ $rel->nombre }}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute top-3 right-3">
                                 <span class="bg-white/95 backdrop-blur-sm text-primary-600 font-bold px-3 py-1 rounded-full text-sm shadow-sm">
                                     {{ $rel->precio_formateado }}

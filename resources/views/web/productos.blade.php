@@ -68,15 +68,9 @@
         @forelse($productos as $producto)
             <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
                 <div class="relative h-52 bg-gray-200 overflow-hidden">
-                    @if($producto->primera_imagen)
-                        <img src="{{ asset('storage/' . $producto->primera_imagen) }}"
-                             alt="{{ $producto->nombre }}"
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    @else
-                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                            <span class="text-5xl opacity-50">🍽️</span>
-                        </div>
-                    @endif
+                    <img src="{{ $producto->imagen_url }}"
+                         alt="{{ $producto->nombre }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute top-3 right-3">
                         <span class="bg-white/95 backdrop-blur-sm text-primary-600 font-bold px-3 py-1 rounded-full text-sm shadow-sm">
                             {{ $producto->precio_formateado }}
@@ -131,7 +125,9 @@
             </div>
         @empty
             <div class="col-span-full text-center py-20">
-                <div class="text-6xl mb-4 opacity-30">🔍</div>
+                <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">No se encontraron productos</h3>
                 <p class="text-gray-500 mb-6">Intenta con otros términos de búsqueda o categoría</p>
                 <a href="{{ route('productos') }}" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold">

@@ -121,6 +121,26 @@ class Producto extends Model
     }
 
     /**
+     * Accessor: URL completa de la primera imagen
+     */
+    public function getImagenUrlAttribute(): string
+    {
+        $imagen = $this->primera_imagen;
+
+        if (!$imagen) {
+            return 'https://placehold.co/600x400/f3f4f6/9ca3af?text=Sin+Imagen';
+        }
+
+        // Si ya es una URL completa
+        if (str_starts_with($imagen, 'http')) {
+            return $imagen;
+        }
+
+        // Si es una ruta de storage
+        return asset('storage/' . $imagen);
+    }
+
+    /**
      * Incrementar vistas
      */
     public function incrementarVistas(): void

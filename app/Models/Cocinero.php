@@ -104,6 +104,24 @@ class Cocinero extends Model
     }
 
     /**
+     * Accessor: URL completa de la foto de perfil
+     */
+    public function getFotoUrlAttribute(): string
+    {
+        if (!$this->foto_perfil) {
+            return 'https://placehold.co/200x200/fed7aa/c2410c?text=' . urlencode(substr($this->nombre_completo, 0, 2));
+        }
+
+        // Si ya es una URL completa
+        if (str_starts_with($this->foto_perfil, 'http')) {
+            return $this->foto_perfil;
+        }
+
+        // Si es una ruta de storage
+        return asset('storage/' . $this->foto_perfil);
+    }
+
+    /**
      * Incrementar total de pedidos
      */
     public function incrementarPedidos(): void

@@ -45,13 +45,9 @@
             <div class="absolute -top-16 left-8">
                 <div class="w-32 h-32 bg-white rounded-full p-1 shadow-xl">
                     <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center text-5xl overflow-hidden">
-                        @if($cocinero->foto_perfil)
-                            <img src="{{ asset('storage/' . $cocinero->foto_perfil) }}"
-                                 alt="{{ $cocinero->nombre_completo }}"
-                                 class="w-full h-full object-cover rounded-full">
-                        @else
-                            👨‍🍳
-                        @endif
+                        <img src="{{ $cocinero->foto_url }}"
+                             alt="{{ $cocinero->nombre_completo }}"
+                             class="w-full h-full object-cover rounded-full">
                     </div>
                 </div>
             </div>
@@ -164,15 +160,9 @@
                 @foreach($productos as $producto)
                     <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
                         <div class="relative h-52 bg-gray-200 overflow-hidden">
-                            @if($producto->primera_imagen)
-                                <img src="{{ asset('storage/' . $producto->primera_imagen) }}"
-                                     alt="{{ $producto->nombre }}"
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                                    <span class="text-5xl opacity-50">🍽️</span>
-                                </div>
-                            @endif
+                            <img src="{{ $producto->imagen_url }}"
+                                 alt="{{ $producto->nombre }}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute top-3 right-3">
                                 <span class="bg-white/95 backdrop-blur-sm text-primary-600 font-bold px-3 py-1 rounded-full text-sm shadow-sm">
                                     {{ $producto->precio_formateado }}
@@ -236,7 +226,7 @@
             @endif
         @else
             <div class="text-center py-20 bg-white rounded-2xl border border-gray-100">
-                <div class="text-6xl mb-4 opacity-30">🍽️</div>
+                <div class="text-6xl mb-4 opacity-30"><svg class='w-16 h-16 text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/></svg></div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Sin productos disponibles</h3>
                 <p class="text-gray-500">Este cocinero aún no tiene productos publicados</p>
             </div>

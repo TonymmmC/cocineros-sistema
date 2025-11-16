@@ -40,7 +40,11 @@ return new class extends Migration
             $table->index(['categoria_id', 'disponible']);
             $table->index(['cocinero_id', 'disponible']);
             $table->index('precio');
-            $table->fullText(['nombre', 'descripcion']);
+
+            // FULLTEXT solo para MySQL/MariaDB, no SQLite
+            if (config('database.default') !== 'sqlite') {
+                $table->fullText(['nombre', 'descripcion']);
+            }
         });
     }
 

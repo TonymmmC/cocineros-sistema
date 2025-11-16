@@ -25,7 +25,7 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        $categorias = Categoria::where('activo', true)
+        $categorias = Categoria::where('is_active', true)
             ->orderBy('nombre')
             ->get();
 
@@ -50,7 +50,7 @@ class HomeController extends Controller
         }
 
         $productos = $query->orderBy('created_at', 'desc')->paginate(12);
-        $categorias = Categoria::where('activo', true)->orderBy('nombre')->get();
+        $categorias = Categoria::where('is_active', true)->orderBy('nombre')->get();
 
         return view('web.productos', compact('productos', 'categorias'));
     }

@@ -32,7 +32,7 @@
                         <div class="relative">
                             <input type="text" name="buscar" value="{{ request('buscar') }}"
                                    placeholder="Nombre o descripción..."
-                                   class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm">
+                                   class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500">
                             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
@@ -61,7 +61,7 @@
                                 <input type="number" name="precio_min" value="{{ request('precio_min') }}"
                                        placeholder="{{ number_format($precioMin, 0) }}"
                                        min="0" step="0.01"
-                                       class="w-full pl-7 pr-2 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm">
+                                       class="w-full pl-7 pr-2 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                             </div>
                             <span class="text-gray-400">-</span>
                             <div class="relative flex-1">
@@ -69,7 +69,7 @@
                                 <input type="number" name="precio_max" value="{{ request('precio_max') }}"
                                        placeholder="{{ number_format($precioMax, 0) }}"
                                        min="0" step="0.01"
-                                       class="w-full pl-7 pr-2 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm">
+                                       class="w-full pl-7 pr-2 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                             </div>
                         </div>
                     </div>
@@ -170,9 +170,9 @@
                         @if(request('categoria'))
                             @php $catActiva = $categorias->firstWhere('id', request('categoria')); @endphp
                             @if($catActiva)
-                                <span class="inline-flex items-center bg-primary-50 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">
+                                <span class="inline-flex items-center bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 px-3 py-1 rounded-full text-xs font-medium">
                                     {{ $catActiva->nombre }}
-                                    <a href="{{ request()->fullUrlWithQuery(['categoria' => null]) }}" class="ml-1 hover:text-primary-900">
+                                    <a href="{{ request()->fullUrlWithQuery(['categoria' => null]) }}" class="ml-1 hover:text-primary-900 dark:hover:text-primary-300">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                         </svg>
@@ -181,17 +181,17 @@
                             @endif
                         @endif
                         @if(request('vegetariano'))
-                            <span class="inline-flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-medium">
                                 Vegetariano
                             </span>
                         @endif
                         @if(request('vegano'))
-                            <span class="inline-flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-medium">
                                 Vegano
                             </span>
                         @endif
                         @if(request('sin_gluten'))
-                            <span class="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
                                 Sin Gluten
                             </span>
                         @endif
@@ -245,7 +245,7 @@
                         </div>
                         <div class="p-5">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">
+                                <span class="text-xs font-medium text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">
                                     {{ $producto->categoria->nombre }}
                                 </span>
                                 @if($producto->cocinero)
@@ -285,7 +285,7 @@
                             </div>
 
                             <a href="{{ route('producto.detalle', $producto->id) }}"
-                               class="block text-center bg-gray-900 text-white py-3 rounded-xl font-medium hover:bg-primary-600 transition-colors duration-300">
+                               class="block text-center bg-gray-900 dark:bg-gray-700 text-white py-3 rounded-xl font-medium hover:bg-primary-600 dark:hover:bg-primary-600 transition-colors duration-300">
                                 Ver Detalle
                             </a>
                         </div>

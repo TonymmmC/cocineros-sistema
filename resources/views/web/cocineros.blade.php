@@ -32,7 +32,7 @@
                         <div class="relative">
                             <input type="text" name="buscar" value="{{ request('buscar') }}"
                                    placeholder="Nombre o biografía..."
-                                   class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm">
+                                   class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500">
                             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
@@ -139,7 +139,7 @@
                 @if(request()->hasAny(['calificacion_min', 'especialidad', 'radio_min']))
                     <div class="flex flex-wrap gap-2">
                         @if(request('calificacion_min'))
-                            <span class="inline-flex items-center bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-3 py-1 rounded-full text-xs font-medium">
                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
@@ -147,12 +147,12 @@
                             </span>
                         @endif
                         @if(request('especialidad'))
-                            <span class="inline-flex items-center bg-primary-50 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 px-3 py-1 rounded-full text-xs font-medium">
                                 {{ request('especialidad') }}
                             </span>
                         @endif
                         @if(request('radio_min'))
-                            <span class="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                            <span class="inline-flex items-center bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
                                 ≥{{ request('radio_min') }} km
                             </span>
                         @endif
@@ -215,7 +215,7 @@
                                         {{ $cocinero->nombre_completo }}
                                     </h3>
                                     <div class="flex items-center mt-2">
-                                        <div class="flex items-center bg-yellow-50 px-3 py-1 rounded-full">
+                                        <div class="flex items-center bg-yellow-50 dark:bg-yellow-900/30 px-3 py-1 rounded-full">
                                             <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                             </svg>
@@ -233,7 +233,7 @@
                             @if($cocinero->especialidades && count($cocinero->especialidades) > 0)
                                 <div class="flex flex-wrap gap-2 mb-5">
                                     @foreach(array_slice($cocinero->especialidades, 0, 3) as $especialidad)
-                                        <span class="text-xs bg-primary-50 text-primary-700 px-3 py-1 rounded-full font-medium">
+                                        <span class="text-xs bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 px-3 py-1 rounded-full font-medium">
                                             {{ $especialidad }}
                                         </span>
                                     @endforeach
@@ -272,7 +272,7 @@
                             @endif
 
                             <a href="{{ route('cocinero.detalle', $cocinero->id) }}"
-                               class="block text-center bg-gray-900 text-white py-3 rounded-xl font-medium hover:bg-primary-600 transition-colors duration-300">
+                               class="block text-center bg-gray-900 dark:bg-gray-700 text-white py-3 rounded-xl font-medium hover:bg-primary-600 dark:hover:bg-primary-600 transition-colors duration-300">
                                 Ver Perfil Completo
                             </a>
                         </div>

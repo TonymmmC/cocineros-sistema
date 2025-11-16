@@ -103,7 +103,7 @@
                                     Nombre Completo
                                 </label>
                                 <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
-                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors">
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors">
                             </div>
 
                             <div>
@@ -111,7 +111,7 @@
                                     Correo Electrónico
                                 </label>
                                 <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required
-                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors">
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors">
                             </div>
                         </div>
 
@@ -120,7 +120,7 @@
                                 Teléfono
                             </label>
                             <input type="tel" name="telefono" id="telefono" value="{{ old('telefono', $cliente->telefono ?? '') }}"
-                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                                    placeholder="+591 12345678">
                         </div>
 
@@ -132,7 +132,7 @@
                                         Nueva Contraseña
                                     </label>
                                     <input type="password" name="password" id="password"
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                                            placeholder="Dejar vacío para mantener">
                                 </div>
 
@@ -141,7 +141,7 @@
                                         Confirmar Contraseña
                                     </label>
                                     <input type="password" name="password_confirmation" id="password_confirmation"
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                                            placeholder="Confirmar nueva contraseña">
                                 </div>
                             </div>

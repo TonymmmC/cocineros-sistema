@@ -3,18 +3,26 @@
 @section('title', 'Inicio - Cocineros')
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-orange-400">
-    <div class="absolute inset-0 bg-black/10"></div>
+<!-- Hero Section con Banner -->
+<section class="relative overflow-hidden">
+    {{-- Banner de fondo --}}
     <div class="absolute inset-0">
-        <div class="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 right-10 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl"></div>
+        <img src="{{ asset('images/banner.png') }}"
+             alt="Banner Cocineros"
+             class="w-full h-full object-cover"
+             onerror="this.style.display='none'; this.parentElement.classList.add('bg-gradient-to-br', 'from-primary-600', 'via-primary-500', 'to-orange-400');">
+    </div>
+    {{-- Overlay para mejorar legibilidad del texto --}}
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-orange-300/10 rounded-full blur-3xl"></div>
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div class="text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
                 Comida Casera,<br>
-                <span class="text-orange-100">Sabor Auténtico</span>
+                <span class="text-orange-300">Sabor Auténtico</span>
             </h1>
             <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
                 Descubre platillos únicos preparados por cocineros locales apasionados.

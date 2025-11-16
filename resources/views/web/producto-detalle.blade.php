@@ -5,31 +5,67 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Breadcrumb -->
-    <nav class="mb-6 text-sm">
-        <a href="{{ route('home') }}" class="text-gray-500 hover:text-gray-700">Inicio</a>
-        <span class="mx-2 text-gray-400">/</span>
-        <a href="{{ route('productos') }}" class="text-gray-500 hover:text-gray-700">Productos</a>
-        <span class="mx-2 text-gray-400">/</span>
-        <span class="text-gray-900">{{ $producto->nombre }}</span>
+    <nav class="mb-8">
+        <ol class="flex items-center space-x-2 text-sm">
+            <li>
+                <a href="{{ route('home') }}" class="text-gray-500 hover:text-primary-600 transition-colors">Inicio</a>
+            </li>
+            <li>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </li>
+            <li>
+                <a href="{{ route('productos') }}" class="text-gray-500 hover:text-primary-600 transition-colors">Productos</a>
+            </li>
+            <li>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </li>
+            <li>
+                <span class="text-gray-900 font-medium">{{ Str::limit($producto->nombre, 30) }}</span>
+            </li>
+        </ol>
     </nav>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <!-- Imágenes -->
         <div>
-            <div class="bg-gray-200 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+            <div class="relative bg-gray-100 rounded-2xl overflow-hidden h-[450px] shadow-sm">
                 @if($producto->primera_imagen)
                     <img src="{{ asset('storage/' . $producto->primera_imagen) }}"
                          alt="{{ $producto->nombre }}"
                          class="w-full h-full object-cover">
                 @else
-                    <span class="text-6xl">🍽️</span>
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                        <span class="text-8xl opacity-30">🍽️</span>
+                    </div>
                 @endif
+
+                <!-- Badges -->
+                <div class="absolute top-4 left-4 flex flex-col gap-2">
+                    @if($producto->es_vegano)
+                        <span class="bg-green-500 text-white text-sm font-medium px-3 py-1 rounded-full shadow-sm">
+                            Vegano
+                        </span>
+                    @elseif($producto->es_vegetariano)
+                        <span class="bg-green-500 text-white text-sm font-medium px-3 py-1 rounded-full shadow-sm">
+                            Vegetariano
+                        </span>
+                    @endif
+                    @if($producto->es_sin_gluten)
+                        <span class="bg-blue-500 text-white text-sm font-medium px-3 py-1 rounded-full shadow-sm">
+                            Sin Gluten
+                        </span>
+                    @endif
+                </div>
             </div>
 
             @if($producto->imagenes && count($producto->imagenes) > 1)
-                <div class="grid grid-cols-4 gap-2 mt-4">
+                <div class="grid grid-cols-4 gap-3 mt-4">
                     @foreach($producto->imagenes as $imagen)
-                        <div class="bg-gray-200 rounded h-20 overflow-hidden">
+                        <div class="bg-gray-100 rounded-xl h-24 overflow-hidden shadow-sm hover:ring-2 hover:ring-primary-500 transition-all cursor-pointer">
                             <img src="{{ asset('storage/' . $imagen) }}"
                                  alt="{{ $producto->nombre }}"
                                  class="w-full h-full object-cover">
@@ -41,70 +77,66 @@
 
         <!-- Información -->
         <div>
-            <div class="flex justify-between items-start mb-4">
-                <h1 class="text-3xl font-bold text-gray-900">{{ $producto->nombre }}</h1>
-                <span class="text-3xl font-bold text-amber-600">{{ $producto->precio_formateado }}</span>
-            </div>
-
-            <div class="mb-6">
-                <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+            <div class="mb-4">
+                <span class="inline-block text-sm font-medium text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
                     {{ $producto->categoria->nombre }}
                 </span>
             </div>
 
-            <p class="text-gray-600 mb-6 leading-relaxed">{{ $producto->descripcion }}</p>
+            <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $producto->nombre }}</h1>
 
-            <!-- Características -->
-            <div class="flex flex-wrap gap-3 mb-6">
-                @if($producto->es_vegetariano)
-                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                        🥬 Vegetariano
-                    </span>
-                @endif
-                @if($producto->es_vegano)
-                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                        🌱 Vegano
-                    </span>
-                @endif
-                @if($producto->es_sin_gluten)
-                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                        🌾 Sin Gluten
-                    </span>
-                @endif
+            <div class="flex items-center gap-4 mb-6">
+                <span class="text-4xl font-bold text-primary-600">{{ $producto->precio_formateado }}</span>
+                <span class="text-gray-500 text-sm">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    {{ $producto->vistas }} vistas
+                </span>
             </div>
 
-            <!-- Detalles -->
-            <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                <h3 class="font-semibold text-gray-900 mb-3">Detalles</h3>
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <span class="text-gray-500">Tiempo de preparación:</span>
-                        <span class="block font-medium">{{ $producto->tiempo_preparacion_min }} minutos</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-500">Porciones:</span>
-                        <span class="block font-medium">{{ $producto->porciones }}</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-500">Vistas:</span>
-                        <span class="block font-medium">{{ $producto->vistas }}</span>
-                    </div>
-                    @if($producto->stock_disponible !== null)
-                        <div>
-                            <span class="text-gray-500">Stock disponible:</span>
-                            <span class="block font-medium">{{ $producto->stock_disponible }}</span>
-                        </div>
-                    @endif
+            <p class="text-gray-600 text-lg leading-relaxed mb-8">{{ $producto->descripcion }}</p>
+
+            <!-- Detalles rápidos -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div class="font-bold text-gray-900">{{ $producto->tiempo_preparacion_min }}</div>
+                    <div class="text-xs text-gray-500">minutos</div>
                 </div>
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <div class="font-bold text-gray-900">{{ $producto->porciones }}</div>
+                    <div class="text-xs text-gray-500">porciones</div>
+                </div>
+                @if($producto->stock_disponible !== null)
+                    <div class="bg-gray-50 rounded-xl p-4 text-center">
+                        <svg class="w-6 h-6 text-primary-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                        <div class="font-bold text-gray-900">{{ $producto->stock_disponible }}</div>
+                        <div class="text-xs text-gray-500">disponibles</div>
+                    </div>
+                @endif
             </div>
 
             <!-- Ingredientes -->
             @if($producto->ingredientes && count($producto->ingredientes) > 0)
                 <div class="mb-6">
-                    <h3 class="font-semibold text-gray-900 mb-3">Ingredientes</h3>
+                    <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                        <svg class="w-5 h-5 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Ingredientes
+                    </h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach($producto->ingredientes as $ingrediente)
-                            <span class="bg-amber-50 text-amber-800 px-3 py-1 rounded text-sm">
+                            <span class="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
                                 {{ $ingrediente }}
                             </span>
                         @endforeach
@@ -115,11 +147,16 @@
             <!-- Alérgenos -->
             @if($producto->alergenos && count($producto->alergenos) > 0)
                 <div class="mb-6">
-                    <h3 class="font-semibold text-gray-900 mb-3">Alérgenos</h3>
+                    <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                        <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        Alérgenos
+                    </h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach($producto->alergenos as $alergeno)
-                            <span class="bg-red-50 text-red-700 px-3 py-1 rounded text-sm">
-                                ⚠️ {{ $alergeno }}
+                            <span class="bg-red-50 text-red-700 px-3 py-1 rounded-full text-sm font-medium border border-red-100">
+                                {{ $alergeno }}
                             </span>
                         @endforeach
                     </div>
@@ -128,26 +165,35 @@
 
             <!-- Cocinero -->
             @if($producto->cocinero)
-                <div class="border-t pt-6">
-                    <h3 class="font-semibold text-gray-900 mb-3">Preparado por</h3>
+                <div class="border-t border-gray-200 pt-6 mt-6">
+                    <h3 class="font-bold text-gray-900 mb-4">Preparado por</h3>
                     <a href="{{ route('cocinero.detalle', $producto->cocinero->id) }}"
-                       class="flex items-center bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition">
-                        <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-2xl">
+                       class="flex items-center bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-gray-100 group">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center text-3xl overflow-hidden ring-4 ring-white shadow-md">
                             @if($producto->cocinero->foto_perfil)
                                 <img src="{{ asset('storage/' . $producto->cocinero->foto_perfil) }}"
                                      alt="{{ $producto->cocinero->nombre_completo }}"
-                                     class="w-full h-full rounded-full object-cover">
+                                     class="w-full h-full object-cover">
                             @else
                                 👨‍🍳
                             @endif
                         </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-gray-900">{{ $producto->cocinero->nombre_completo }}</h4>
-                            <div class="flex items-center text-sm">
-                                <span class="text-yellow-500">⭐</span>
-                                <span class="ml-1">{{ number_format($producto->cocinero->calificacion_promedio, 1) }}</span>
+                        <div class="ml-4 flex-1">
+                            <h4 class="font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                                {{ $producto->cocinero->nombre_completo }}
+                            </h4>
+                            <div class="flex items-center mt-1">
+                                <div class="flex items-center bg-yellow-50 px-2 py-1 rounded-full">
+                                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                    <span class="ml-1 font-semibold text-gray-900 text-sm">{{ number_format($producto->cocinero->calificacion_promedio, 1) }}</span>
+                                </div>
                             </div>
                         </div>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
                     </a>
                 </div>
             @endif
@@ -156,27 +202,33 @@
 
     <!-- Productos Relacionados -->
     @if($relacionados->count() > 0)
-        <div class="mt-12">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Productos Relacionados</h2>
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Productos Relacionados</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($relacionados as $rel)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                        <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="relative h-48 bg-gray-200 overflow-hidden">
                             @if($rel->primera_imagen)
                                 <img src="{{ asset('storage/' . $rel->primera_imagen) }}"
                                      alt="{{ $rel->nombre }}"
-                                     class="w-full h-full object-cover">
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             @else
-                                <span class="text-4xl">🍽️</span>
+                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                                    <span class="text-4xl opacity-50">🍽️</span>
+                                </div>
                             @endif
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-white/95 backdrop-blur-sm text-primary-600 font-bold px-3 py-1 rounded-full text-sm shadow-sm">
+                                    {{ $rel->precio_formateado }}
+                                </span>
+                            </div>
                         </div>
                         <div class="p-4">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-semibold text-gray-900 truncate">{{ $rel->nombre }}</h3>
-                                <span class="text-amber-600 font-bold">{{ $rel->precio_formateado }}</span>
-                            </div>
+                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                                {{ $rel->nombre }}
+                            </h3>
                             <a href="{{ route('producto.detalle', $rel->id) }}"
-                               class="block text-center bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition">
+                               class="block text-center bg-gray-900 text-white py-2 rounded-xl font-medium hover:bg-primary-600 transition-colors duration-300">
                                 Ver Detalle
                             </a>
                         </div>

@@ -3,29 +3,75 @@
 @section('title', 'Inicio - Cocineros')
 
 @section('content')
-<!-- Hero -->
-<section class="bg-gradient-to-r from-amber-500 to-orange-500 text-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">
-            Comida Casera, Sabor Auténtico
-        </h1>
-        <p class="text-xl md:text-2xl mb-8 opacity-90">
-            Conectamos cocineros locales con amantes de la buena comida
-        </p>
-        <a href="{{ route('productos') }}" class="bg-white text-amber-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition">
-            Ver Productos
-        </a>
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-orange-400">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
+                Comida Casera,<br>
+                <span class="text-orange-100">Sabor Auténtico</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
+                Descubre platillos únicos preparados por cocineros locales apasionados.
+                Cada bocado cuenta una historia.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ route('productos') }}"
+                   class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                    <span>Explorar Productos</span>
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+                <a href="{{ route('cocineros') }}"
+                   class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white/10 transition-all duration-300">
+                    Conocer Cocineros
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="bg-white py-12 -mt-8 relative z-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary-600">{{ $productos->count() }}+</div>
+                <div class="text-gray-600 mt-1">Productos</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary-600">{{ $cocineros->count() }}+</div>
+                <div class="text-gray-600 mt-1">Cocineros</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary-600">{{ $categorias->count() }}</div>
+                <div class="text-gray-600 mt-1">Categorías</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary-600">4.8</div>
+                <div class="text-gray-600 mt-1">Calificación</div>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- Categorías -->
-<section class="py-12 bg-white">
+<section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Categorías</h2>
-        <div class="flex flex-wrap gap-3">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Explora por Categoría</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Encuentra exactamente lo que buscas entre nuestra variedad de opciones</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-3">
             @foreach($categorias as $categoria)
                 <a href="{{ route('productos', ['categoria' => $categoria->id]) }}"
-                   class="px-4 py-2 bg-gray-100 rounded-full text-gray-700 hover:bg-amber-100 hover:text-amber-700 transition">
+                   class="group px-6 py-3 bg-gray-100 rounded-full text-gray-700 hover:bg-primary-500 hover:text-white font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                     {{ $categoria->nombre }}
                 </a>
             @endforeach
@@ -34,97 +80,203 @@
 </section>
 
 <!-- Productos Destacados -->
-<section class="py-12">
+<section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-gray-900">Productos Recientes</h2>
-            <a href="{{ route('productos') }}" class="text-amber-600 hover:text-amber-700 font-medium">
-                Ver todos →
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Productos Recientes</h2>
+                <p class="text-gray-600">Los últimos platillos agregados por nuestros cocineros</p>
+            </div>
+            <a href="{{ route('productos') }}"
+               class="hidden sm:inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group">
+                Ver todos
+                <svg class="ml-1 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
             </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse($productos as $producto)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center">
+                <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-52 bg-gray-200 overflow-hidden">
                         @if($producto->primera_imagen)
                             <img src="{{ asset('storage/' . $producto->primera_imagen) }}"
                                  alt="{{ $producto->nombre }}"
-                                 class="w-full h-full object-cover">
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         @else
-                            <span class="text-4xl">🍽️</span>
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                                <span class="text-5xl opacity-50">🍽️</span>
+                            </div>
+                        @endif
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-white/95 backdrop-blur-sm text-primary-600 font-bold px-3 py-1 rounded-full text-sm shadow-sm">
+                                {{ $producto->precio_formateado }}
+                            </span>
+                        </div>
+                        @if($producto->es_vegetariano || $producto->es_vegano)
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+                                    {{ $producto->es_vegano ? 'Vegano' : 'Vegetariano' }}
+                                </span>
+                            </div>
                         @endif
                     </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-semibold text-gray-900 truncate">{{ $producto->nombre }}</h3>
-                            <span class="text-amber-600 font-bold">{{ $producto->precio_formateado }}</span>
+                    <div class="p-5">
+                        <div class="mb-2">
+                            <span class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">
+                                {{ $producto->categoria->nombre }}
+                            </span>
                         </div>
-                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $producto->descripcion }}</p>
-                        <div class="flex justify-between items-center text-xs text-gray-500">
-                            <span class="bg-gray-100 px-2 py-1 rounded">{{ $producto->categoria->nombre }}</span>
-                            <span>{{ $producto->cocinero->nombre_completo ?? 'Sin cocinero' }}</span>
+                        <h3 class="font-bold text-gray-900 text-lg mb-2 group-hover:text-primary-600 transition-colors">
+                            {{ $producto->nombre }}
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $producto->descripcion }}</p>
+                        <div class="flex justify-between items-center text-xs text-gray-500 mb-4">
+                            <span class="flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                {{ $producto->tiempo_preparacion_min }} min
+                            </span>
+                            <span class="flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                {{ $producto->cocinero->nombre_completo ?? 'Sin cocinero' }}
+                            </span>
                         </div>
                         <a href="{{ route('producto.detalle', $producto->id) }}"
-                           class="mt-3 block text-center bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition">
+                           class="block text-center bg-gray-900 text-white py-3 rounded-xl font-medium hover:bg-primary-600 transition-colors duration-300">
                             Ver Detalle
                         </a>
                     </div>
                 </div>
             @empty
-                <div class="col-span-full text-center py-12 text-gray-500">
-                    No hay productos disponibles
+                <div class="col-span-full text-center py-16">
+                    <div class="text-6xl mb-4 opacity-30">🍽️</div>
+                    <p class="text-gray-500 text-lg">No hay productos disponibles</p>
                 </div>
             @endforelse
+        </div>
+
+        <div class="text-center mt-10 sm:hidden">
+            <a href="{{ route('productos') }}"
+               class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold">
+                Ver todos los productos
+                <svg class="ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>
 
 <!-- Cocineros Destacados -->
-<section class="py-12 bg-white">
+<section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-gray-900">Cocineros Destacados</h2>
-            <a href="{{ route('cocineros') }}" class="text-amber-600 hover:text-amber-700 font-medium">
-                Ver todos →
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Cocineros Destacados</h2>
+                <p class="text-gray-600">Conoce a los artistas detrás de cada platillo</p>
+            </div>
+            <a href="{{ route('cocineros') }}"
+               class="hidden sm:inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group">
+                Ver todos
+                <svg class="ml-1 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($cocineros as $cocinero)
-                <div class="bg-gray-50 rounded-lg p-6 hover:shadow-md transition">
-                    <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-2xl">
-                            @if($cocinero->foto_perfil)
-                                <img src="{{ asset('storage/' . $cocinero->foto_perfil) }}"
-                                     alt="{{ $cocinero->nombre_completo }}"
-                                     class="w-full h-full rounded-full object-cover">
-                            @else
-                                👨‍🍳
+                <div class="group bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="flex items-center mb-5">
+                        <div class="relative">
+                            <div class="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center text-3xl overflow-hidden ring-4 ring-white shadow-lg">
+                                @if($cocinero->foto_perfil)
+                                    <img src="{{ asset('storage/' . $cocinero->foto_perfil) }}"
+                                         alt="{{ $cocinero->nombre_completo }}"
+                                         class="w-full h-full object-cover">
+                                @else
+                                    👨‍🍳
+                                @endif
+                            </div>
+                            @if($cocinero->esta_disponible)
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white"></div>
                             @endif
                         </div>
                         <div class="ml-4">
-                            <h3 class="font-semibold text-gray-900">{{ $cocinero->nombre_completo }}</h3>
-                            <div class="flex items-center text-sm">
-                                <span class="text-yellow-500">⭐</span>
-                                <span class="ml-1">{{ number_format($cocinero->calificacion_promedio, 1) }}</span>
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-primary-600 transition-colors">
+                                {{ $cocinero->nombre_completo }}
+                            </h3>
+                            <div class="flex items-center mt-1">
+                                <div class="flex items-center bg-yellow-50 px-2 py-1 rounded-full">
+                                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                    <span class="ml-1 font-semibold text-gray-900">{{ number_format($cocinero->calificacion_promedio, 1) }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">
-                        {{ $cocinero->bio ?? 'Cocinero profesional' }}
+
+                    <p class="text-gray-600 mb-5 line-clamp-3 leading-relaxed">
+                        {{ $cocinero->bio ?? 'Cocinero profesional apasionado por crear experiencias culinarias únicas.' }}
                     </p>
+
+                    @if($cocinero->especialidades && count($cocinero->especialidades) > 0)
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            @foreach(array_slice($cocinero->especialidades, 0, 3) as $especialidad)
+                                <span class="text-xs bg-primary-50 text-primary-700 px-3 py-1 rounded-full font-medium">
+                                    {{ $especialidad }}
+                                </span>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <a href="{{ route('cocinero.detalle', $cocinero->id) }}"
-                       class="text-amber-600 hover:text-amber-700 font-medium text-sm">
-                        Ver perfil →
+                       class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group/link">
+                        Ver perfil completo
+                        <svg class="ml-1 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
                     </a>
                 </div>
             @empty
-                <div class="col-span-full text-center py-12 text-gray-500">
-                    No hay cocineros disponibles
+                <div class="col-span-full text-center py-16">
+                    <div class="text-6xl mb-4 opacity-30">👨‍🍳</div>
+                    <p class="text-gray-500 text-lg">No hay cocineros disponibles</p>
                 </div>
             @endforelse
         </div>
+
+        <div class="text-center mt-10 sm:hidden">
+            <a href="{{ route('cocineros') }}"
+               class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold">
+                Ver todos los cocineros
+                <svg class="ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-primary-600 to-orange-500">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            ¿Eres cocinero y quieres unirte?
+        </h2>
+        <p class="text-xl text-white/90 mb-8">
+            Comparte tu talento culinario con miles de personas y genera ingresos haciendo lo que amas.
+        </p>
+        <a href="#"
+           class="inline-flex items-center px-8 py-4 bg-white text-primary-600 rounded-xl font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl">
+            Registrarme como Cocinero
+        </a>
     </div>
 </section>
 @endsection

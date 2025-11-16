@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\CocineroController;
+use App\Http\Controllers\Api\PedidoController;
 use App\Http\Controllers\Api\ProductoController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,5 +47,21 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::middleware('role:cocinero')->group(function () {
         Route::put('/cocineros/perfil', [CocineroController::class, 'updatePerfil']);
         Route::patch('/cocineros/toggle-disponibilidad', [CocineroController::class, 'toggleDisponibilidad']);
+    });
+
+    // Pedidos (cualquier usuario autenticado)
+    Route::get('/pedidos/{id}', [PedidoController::class, 'show']);
+
+    // Pedidos (solo clientes)
+    Route::middleware('role:cliente')->group(function () {
+        Route::post('/pedidos', [PedidoController::class, 'store']);
+        Route::get('/mis-pedidos', [PedidoController::class, 'misPedidos']);
+        Route::patch('/pedidos/{id}/cancelar', [PedidoController::class, 'cancelar']);
+    });
+
+    // Pedidos (solo cocineros)
+    Route::middleware('role:cocinero')->group(function () {
+        Route::get('/pedidos-recibidos', [PedidoController::class, 'pedidosRecibidos']);
+        Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado']);
     });
 });

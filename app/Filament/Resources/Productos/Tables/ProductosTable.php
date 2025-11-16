@@ -42,7 +42,7 @@ class ProductosTable
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('cocinero.name')
+                TextColumn::make('cocinero.nombre_completo')
                     ->label('Cocinero')
                     ->sortable()
                     ->searchable()
@@ -137,7 +137,7 @@ class ProductosTable
 
                 SelectFilter::make('cocinero_id')
                     ->label('Cocinero')
-                    ->relationship('cocinero', 'name')
+                    ->relationship('cocinero', 'nombre_completo')
                     ->searchable()
                     ->preload(),
 

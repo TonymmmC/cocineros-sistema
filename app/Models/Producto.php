@@ -53,11 +53,11 @@ class Producto extends Model
     }
 
     /**
-     * Relación: Un producto pertenece a un cocinero (usuario)
+     * Relación: Un producto pertenece a un cocinero
      */
     public function cocinero(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'cocinero_id');
+        return $this->belongsTo(Cocinero::class);
     }
 
     /**

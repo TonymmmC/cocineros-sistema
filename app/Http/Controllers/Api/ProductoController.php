@@ -135,7 +135,14 @@ class ProductoController extends Controller
             'disponible' => 'boolean',
         ]);
 
-        $validated['cocinero_id'] = $request->user()->id;
+        $cocinero = $request->user()->cocinero;
+        if (!$cocinero) {
+            return response()->json([
+                'message' => 'El usuario no tiene un perfil de cocinero',
+            ], 403);
+        }
+
+        $validated['cocinero_id'] = $cocinero->id;
 
         $producto = Producto::create($validated);
         $producto->load(['categoria', 'cocinero']);
@@ -152,8 +159,9 @@ class ProductoController extends Controller
     public function update(Request $request, int $id): JsonResponse
     {
         $producto = Producto::findOrFail($id);
+        $cocinero = $request->user()->cocinero;
 
-        if ($producto->cocinero_id !== $request->user()->id) {
+        if (!$cocinero || $producto->cocinero_id !== $cocinero->id) {
             return response()->json([
                 'message' => 'No tienes permiso para editar este producto',
             ], 403);
@@ -190,8 +198,9 @@ class ProductoController extends Controller
     public function destroy(Request $request, int $id): JsonResponse
     {
         $producto = Producto::findOrFail($id);
+        $cocinero = $request->user()->cocinero;
 
-        if ($producto->cocinero_id !== $request->user()->id) {
+        if (!$cocinero || $producto->cocinero_id !== $cocinero->id) {
             return response()->json([
                 'message' => 'No tienes permiso para eliminar este producto',
             ], 403);
@@ -210,8 +219,9 @@ class ProductoController extends Controller
     public function toggleDisponibilidad(Request $request, int $id): JsonResponse
     {
         $producto = Producto::findOrFail($id);
+        $cocinero = $request->user()->cocinero;
 
-        if ($producto->cocinero_id !== $request->user()->id) {
+        if (!$cocinero || $producto->cocinero_id !== $cocinero->id) {
             return response()->json([
                 'message' => 'No tienes permiso para modificar este producto',
             ], 403);

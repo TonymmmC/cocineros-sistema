@@ -31,11 +31,15 @@ class ProductoResource extends JsonResource
             'disponible' => $this->disponible,
             'vistas' => $this->vistas,
             'categoria' => new CategoriaResource($this->whenLoaded('categoria')),
-            'cocinero' => [
-                'id' => $this->cocinero?->id,
-                'nombre' => $this->cocinero?->name,
-                'email' => $this->cocinero?->email,
-            ],
+            'cocinero' => $this->whenLoaded('cocinero', function () {
+                return [
+                    'id' => $this->cocinero->id,
+                    'nombre_completo' => $this->cocinero->nombre_completo,
+                    'foto_perfil' => $this->cocinero->foto_perfil,
+                    'calificacion_promedio' => $this->cocinero->calificacion_promedio,
+                    'esta_disponible' => $this->cocinero->esta_disponible,
+                ];
+            }),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];

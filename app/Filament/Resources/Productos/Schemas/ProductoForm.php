@@ -60,7 +60,7 @@ class ProductoForm
 
                         Select::make('cocinero_id')
                             ->label('Cocinero')
-                            ->relationship('cocinero', 'name')
+                            ->relationship('cocinero', 'nombre_completo')
                             ->searchable()
                             ->preload()
                             ->columnSpan(1),
